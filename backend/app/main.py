@@ -82,8 +82,17 @@ app = FastAPI(title="Solar Site Suitability API", version="1.0.0",
               description="Remote sensing + machine learning solar PV site suitability for any location on Earth.",
               lifespan=lifespan)
 
-origins = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",") if o.strip()]
-app.add_middleware(CORSMiddleware, allow_origins=origins, allow_origin_regex=os.getenv("ALLOWED_ORIGIN_REGEX"),
+# CORS. Browsers send the Origin without a trailing slash, so configured values are
+# normalised ("https://x.vercel.app/" -> "https://x.vercel.app"). Vercel production and
+# preview URLs (*.vercel.app) and local dev servers are always allowed, so a missing or
+# mistyped ALLOWED_ORIGINS on the host cannot take the site offline. The API is public
+# and read-only (no cookies / credentials), so a permissive origin list is safe.
+DEFAULT_ORIGIN_REGEX = r"https://([a-z0-9-]+\.)*vercel\.app|http://(localhost|127\.0\.0\.1)(:\d+)?"
+CORS_ORIGINS = sorted({o.strip().rstrip("/") for o in
+                       os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",") if o.strip()})
+_extra_regex = (os.getenv("ALLOWED_ORIGIN_REGEX") or "").strip()
+CORS_ORIGIN_REGEX = f"(?:{DEFAULT_ORIGIN_REGEX})" + (f"|(?:{_extra_regex})" if _extra_regex else "")
+app.add_middleware(CORSMiddleware, allow_origins=CORS_ORIGINS, allow_origin_regex=CORS_ORIGIN_REGEX,
                    allow_methods=["GET", "POST", "OPTIONS"], allow_headers=["*"], max_age=3600)
 app.add_middleware(GZipMiddleware, minimum_size=1024)
 app.mount("/figures", StaticFiles(directory=config.FIGURES_DIR), name="figures")
@@ -155,6 +164,7 @@ def health():
                      "paused_for_s": max(0, round(p._gee_disabled_until - time.time())),
                      "last_error": p.last_live_error},
         "cache": {"predict": predict_cache.stats(), "report": report_cache.stats()},
+        "cors": {"origins": CORS_ORIGINS, "origin_regex": CORS_ORIGIN_REGEX},
     }
 
 
