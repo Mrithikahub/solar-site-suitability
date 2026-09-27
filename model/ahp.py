@@ -24,14 +24,32 @@ Two versions are produced from cached data only:
 """
 from __future__ import annotations
 
+import importlib
 import json
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from . import config, viz
+from . import config
 from .features import IGBP_GROUPS
+
+
+class _LazyModule:
+    """Import a module on first attribute access. The API imports this file only
+    for `global_scores` / `overlay`; matplotlib and the plotting helpers load
+    only when a map or figure is actually drawn."""
+
+    def __init__(self, name: str, package: str | None = None):
+        self._name, self._package, self._mod = name, package, None
+
+    def __getattr__(self, attr):
+        if self._mod is None:
+            self._mod = importlib.import_module(self._name, self._package)
+        return getattr(self._mod, attr)
+
+
+plt = _LazyModule("matplotlib.pyplot")
+viz = _LazyModule(".viz", __package__)
 
 AHP_JSON = config.PROCESSED_DIR / "ahp_results.json"
 RI = {1: 0.0, 2: 0.0, 3: 0.58, 4: 0.90, 5: 1.12, 6: 1.24, 7: 1.32, 8: 1.41, 9: 1.45, 10: 1.49}

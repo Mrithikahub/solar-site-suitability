@@ -7,14 +7,11 @@ short methodology + limitations note.
 """
 from __future__ import annotations
 
+import importlib.util
 import io
 from datetime import datetime, timezone
 from pathlib import Path
 
-import matplotlib
-
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
 from reportlab.lib import colors  # noqa: E402
 from reportlab.lib.enums import TA_LEFT  # noqa: E402
 from reportlab.lib.pagesizes import A4  # noqa: E402
@@ -25,9 +22,20 @@ from reportlab.pdfbase.ttfonts import TTFont  # noqa: E402
 from reportlab.platypus import (Image, KeepTogether, Paragraph, SimpleDocTemplate, Spacer, Table,  # noqa: E402
                                 TableStyle)
 
-_FONT_DIR = Path(matplotlib.get_data_path()) / "fonts" / "ttf"
-pdfmetrics.registerFont(TTFont("DejaVu", str(_FONT_DIR / "DejaVuSans.ttf")))
-pdfmetrics.registerFont(TTFont("DejaVu-Bold", str(_FONT_DIR / "DejaVuSans-Bold.ttf")))
+_FONTS_READY = False
+
+
+def _register_fonts() -> None:
+    """DejaVu (for °, ², η, ₂ glyphs) ships inside matplotlib's package data; locate it
+    without importing matplotlib, and register once on the first report."""
+    global _FONTS_READY
+    if _FONTS_READY:
+        return
+    spec = importlib.util.find_spec("matplotlib")
+    font_dir = Path(list(spec.submodule_search_locations)[0]) / "mpl-data" / "fonts" / "ttf"
+    pdfmetrics.registerFont(TTFont("DejaVu", str(font_dir / "DejaVuSans.ttf")))
+    pdfmetrics.registerFont(TTFont("DejaVu-Bold", str(font_dir / "DejaVuSans-Bold.ttf")))
+    _FONTS_READY = True
 
 INK = colors.HexColor("#0b0b0b")
 INK_2 = colors.HexColor("#52514e")
@@ -62,6 +70,11 @@ def _fmt(v, nd=2):
 
 
 def _shap_png(contribs: list[dict], n: int = 10) -> io.BytesIO:
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
     items = contribs[:n][::-1]
     fig, ax = plt.subplots(figsize=(6.6, 0.32 * len(items) + 0.8), dpi=200)
     fig.patch.set_facecolor("#fcfcfb")
@@ -105,6 +118,7 @@ def _table(rows, widths, header=True, zebra=True):
 
 
 def build_pdf(pred: dict, name: str | None = None) -> bytes:
+    _register_fonts()
     buf = io.BytesIO()
     doc = SimpleDocTemplate(buf, pagesize=A4, leftMargin=16 * mm, rightMargin=16 * mm, topMargin=14 * mm,
                             bottomMargin=14 * mm, title="Solarsite site report",

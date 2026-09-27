@@ -1,5 +1,6 @@
 # Backend runtime (Render). Versions are pinned to the environment the models were
 # trained in: pickled scikit-learn / XGBoost models must be loaded with the same versions.
+# SHAP values come from XGBoost's built-in TreeSHAP, so the `shap` package is not needed here.
 fastapi==0.141.1
 uvicorn[standard]==0.54.0
 pydantic==2.13.5
@@ -8,8 +9,8 @@ numpy==2.4.6
 pandas==3.0.6
 scipy==1.17.1
 scikit-learn==1.9.1
-xgboost==3.2.0
-shap==0.51.0
+# CPU-only build: same `xgboost` module and model format, without the ~350 MB nvidia-nccl GPU dependency
+xgboost-cpu==3.2.0
 joblib==1.6.0
 pyproj==3.7.2
 shapely==2.1.2
