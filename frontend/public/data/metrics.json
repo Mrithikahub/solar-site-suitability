@@ -1,0 +1,1770 @@
+{
+  "class_thresholds": {
+    "High": 70,
+    "Medium": 40
+  },
+  "low_sample_positive_threshold": 150,
+  "global": {
+    "n_total": 17213,
+    "n_pos": 8213,
+    "n_train": 13770,
+    "n_test": 3443,
+    "variants": {
+      "clean": {
+        "features": [
+          "ghi",
+          "temperature",
+          "cloud_cover",
+          "elevation",
+          "slope",
+          "aspect_equator",
+          "aspect_east",
+          "log_access",
+          "ndvi",
+          "ndbi",
+          "lst",
+          "log_lights",
+          "log_pop",
+          "lc_forest",
+          "lc_shrub",
+          "lc_savanna",
+          "lc_grass",
+          "lc_wetland",
+          "lc_crop",
+          "lc_urban",
+          "lc_snow",
+          "lc_barren",
+          "lc_water"
+        ],
+        "models": {
+          "Random Forest": {
+            "test": {
+              "accuracy": 0.804,
+              "precision": 0.751,
+              "recall": 0.8813,
+              "f1": 0.811,
+              "roc_auc": 0.889,
+              "confusion_matrix": [
+                [
+                  1320,
+                  480
+                ],
+                [
+                  195,
+                  1448
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "cv_stratified_auc": {
+              "mean": 0.8932,
+              "std": 0.0035,
+              "folds": [
+                0.8973,
+                0.8868,
+                0.8935,
+                0.8952,
+                0.8934
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.8782,
+              "std": 0.0034,
+              "folds": [
+                0.8814,
+                0.8752,
+                0.8742,
+                0.8777,
+                0.8827
+              ]
+            },
+            "test_on_preconstruction_land": {
+              "accuracy": 0.804,
+              "precision": 0.751,
+              "recall": 0.8813,
+              "f1": 0.811,
+              "roc_auc": 0.889,
+              "confusion_matrix": [
+                [
+                  1320,
+                  480
+                ],
+                [
+                  195,
+                  1448
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "fit_seconds": 29.5
+          },
+          "XGBoost": {
+            "test": {
+              "accuracy": 0.8077,
+              "precision": 0.7639,
+              "recall": 0.8643,
+              "f1": 0.811,
+              "roc_auc": 0.8882,
+              "confusion_matrix": [
+                [
+                  1361,
+                  439
+                ],
+                [
+                  223,
+                  1420
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "cv_stratified_auc": {
+              "mean": 0.8921,
+              "std": 0.0047,
+              "folds": [
+                0.8948,
+                0.8834,
+                0.8916,
+                0.8966,
+                0.8943
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.8792,
+              "std": 0.0038,
+              "folds": [
+                0.8789,
+                0.8757,
+                0.8747,
+                0.8849,
+                0.8819
+              ]
+            },
+            "test_on_preconstruction_land": {
+              "accuracy": 0.8077,
+              "precision": 0.7639,
+              "recall": 0.8643,
+              "f1": 0.811,
+              "roc_auc": 0.8882,
+              "confusion_matrix": [
+                [
+                  1361,
+                  439
+                ],
+                [
+                  223,
+                  1420
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "fit_seconds": 11.4
+          }
+        }
+      },
+      "leaky": {
+        "features": [
+          "ghi",
+          "temperature",
+          "cloud_cover",
+          "elevation",
+          "slope",
+          "aspect_equator",
+          "aspect_east",
+          "log_access",
+          "ndvi",
+          "ndbi",
+          "lst",
+          "log_lights",
+          "log_pop",
+          "lc_forest",
+          "lc_shrub",
+          "lc_savanna",
+          "lc_grass",
+          "lc_wetland",
+          "lc_crop",
+          "lc_urban",
+          "lc_snow",
+          "lc_barren",
+          "lc_water"
+        ],
+        "models": {
+          "Random Forest": {
+            "test": {
+              "accuracy": 0.8344,
+              "precision": 0.7874,
+              "recall": 0.8947,
+              "f1": 0.8376,
+              "roc_auc": 0.9131,
+              "confusion_matrix": [
+                [
+                  1403,
+                  397
+                ],
+                [
+                  173,
+                  1470
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "cv_stratified_auc": {
+              "mean": 0.916,
+              "std": 0.0038,
+              "folds": [
+                0.9201,
+                0.9117,
+                0.9205,
+                0.9155,
+                0.912
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.9045,
+              "std": 0.0052,
+              "folds": [
+                0.8994,
+                0.8971,
+                0.9077,
+                0.9081,
+                0.9103
+              ]
+            },
+            "test_on_preconstruction_land": {
+              "accuracy": 0.7209,
+              "precision": 0.7866,
+              "recall": 0.5697,
+              "f1": 0.6608,
+              "roc_auc": 0.8363,
+              "confusion_matrix": [
+                [
+                  1546,
+                  254
+                ],
+                [
+                  707,
+                  936
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "fit_seconds": 38.1
+          },
+          "XGBoost": {
+            "test": {
+              "accuracy": 0.8408,
+              "precision": 0.803,
+              "recall": 0.8831,
+              "f1": 0.8412,
+              "roc_auc": 0.9148,
+              "confusion_matrix": [
+                [
+                  1444,
+                  356
+                ],
+                [
+                  192,
+                  1451
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "cv_stratified_auc": {
+              "mean": 0.9196,
+              "std": 0.0027,
+              "folds": [
+                0.9206,
+                0.9165,
+                0.923,
+                0.9217,
+                0.9164
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.9085,
+              "std": 0.0057,
+              "folds": [
+                0.9048,
+                0.8992,
+                0.9113,
+                0.9148,
+                0.9126
+              ]
+            },
+            "test_on_preconstruction_land": {
+              "accuracy": 0.7081,
+              "precision": 0.8004,
+              "recall": 0.5173,
+              "f1": 0.6285,
+              "roc_auc": 0.8292,
+              "confusion_matrix": [
+                [
+                  1588,
+                  212
+                ],
+                [
+                  793,
+                  850
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "fit_seconds": 11.7
+          }
+        }
+      },
+      "as_specified": {
+        "features": [
+          "ghi",
+          "temperature",
+          "cloud_cover",
+          "elevation",
+          "slope",
+          "aspect_equator",
+          "aspect_east",
+          "log_access",
+          "ndvi",
+          "ndbi",
+          "lst",
+          "log_lights",
+          "log_pop",
+          "lc_tree",
+          "lc_shrub",
+          "lc_grass",
+          "lc_crop",
+          "lc_built",
+          "lc_bare",
+          "lc_water",
+          "lc_wetland",
+          "lc_mangrove"
+        ],
+        "models": {
+          "Random Forest": {
+            "test": {
+              "accuracy": 0.8882,
+              "precision": 0.8722,
+              "recall": 0.8971,
+              "f1": 0.8845,
+              "roc_auc": 0.9553,
+              "confusion_matrix": [
+                [
+                  1584,
+                  216
+                ],
+                [
+                  169,
+                  1474
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "cv_stratified_auc": {
+              "mean": 0.958,
+              "std": 0.0035,
+              "folds": [
+                0.963,
+                0.9576,
+                0.9581,
+                0.9594,
+                0.9522
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.9536,
+              "std": 0.0037,
+              "folds": [
+                0.9476,
+                0.9577,
+                0.9562,
+                0.9551,
+                0.9514
+              ]
+            },
+            "fit_seconds": 37.5
+          },
+          "XGBoost": {
+            "test": {
+              "accuracy": 0.8966,
+              "precision": 0.8819,
+              "recall": 0.9044,
+              "f1": 0.893,
+              "roc_auc": 0.9581,
+              "confusion_matrix": [
+                [
+                  1601,
+                  199
+                ],
+                [
+                  157,
+                  1486
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "cv_stratified_auc": {
+              "mean": 0.961,
+              "std": 0.0027,
+              "folds": [
+                0.9646,
+                0.962,
+                0.9608,
+                0.9615,
+                0.9563
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.9561,
+              "std": 0.003,
+              "folds": [
+                0.9519,
+                0.9603,
+                0.9569,
+                0.9578,
+                0.9537
+              ]
+            },
+            "fit_seconds": 11.6
+          }
+        }
+      },
+      "physical_only": {
+        "features": [
+          "ghi",
+          "temperature",
+          "cloud_cover",
+          "elevation",
+          "slope",
+          "aspect_equator",
+          "aspect_east",
+          "ndvi",
+          "ndbi",
+          "lst",
+          "lc_forest",
+          "lc_shrub",
+          "lc_savanna",
+          "lc_grass",
+          "lc_wetland",
+          "lc_crop",
+          "lc_urban",
+          "lc_snow",
+          "lc_barren",
+          "lc_water"
+        ],
+        "models": {
+          "Random Forest": {
+            "test": {
+              "accuracy": 0.7676,
+              "precision": 0.7174,
+              "recall": 0.8466,
+              "f1": 0.7767,
+              "roc_auc": 0.8503,
+              "confusion_matrix": [
+                [
+                  1252,
+                  548
+                ],
+                [
+                  252,
+                  1391
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "cv_stratified_auc": {
+              "mean": 0.8455,
+              "std": 0.0061,
+              "folds": [
+                0.8575,
+                0.8405,
+                0.8436,
+                0.8436,
+                0.8422
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.8181,
+              "std": 0.0026,
+              "folds": [
+                0.814,
+                0.8195,
+                0.8172,
+                0.8182,
+                0.8219
+              ]
+            },
+            "test_on_preconstruction_land": {
+              "accuracy": 0.7676,
+              "precision": 0.7174,
+              "recall": 0.8466,
+              "f1": 0.7767,
+              "roc_auc": 0.8503,
+              "confusion_matrix": [
+                [
+                  1252,
+                  548
+                ],
+                [
+                  252,
+                  1391
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "fit_seconds": 45.0
+          },
+          "XGBoost": {
+            "test": {
+              "accuracy": 0.7618,
+              "precision": 0.7135,
+              "recall": 0.8369,
+              "f1": 0.7703,
+              "roc_auc": 0.8448,
+              "confusion_matrix": [
+                [
+                  1248,
+                  552
+                ],
+                [
+                  268,
+                  1375
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "cv_stratified_auc": {
+              "mean": 0.8424,
+              "std": 0.006,
+              "folds": [
+                0.8514,
+                0.8345,
+                0.8392,
+                0.84,
+                0.8467
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.8176,
+              "std": 0.0054,
+              "folds": [
+                0.8123,
+                0.8184,
+                0.811,
+                0.8207,
+                0.8257
+              ]
+            },
+            "test_on_preconstruction_land": {
+              "accuracy": 0.7618,
+              "precision": 0.7135,
+              "recall": 0.8369,
+              "f1": 0.7703,
+              "roc_auc": 0.8448,
+              "confusion_matrix": [
+                [
+                  1248,
+                  552
+                ],
+                [
+                  268,
+                  1375
+                ]
+              ],
+              "n": 3443,
+              "n_pos": 1643
+            },
+            "fit_seconds": 10.5
+          }
+        }
+      }
+    },
+    "deployed_model": "XGBoost",
+    "ahp_test": {
+      "accuracy": 0.6111,
+      "precision": 0.5592,
+      "recall": 0.8734,
+      "f1": 0.6819,
+      "roc_auc": 0.6216,
+      "confusion_matrix": [
+        [
+          669,
+          1131
+        ],
+        [
+          208,
+          1435
+        ]
+      ],
+      "n": 3443,
+      "n_pos": 1643
+    },
+    "physical_model": "Random Forest",
+    "per_region": [
+      {
+        "region": "Africa",
+        "n": 1445,
+        "n_pos": 225,
+        "auc": 0.9635,
+        "f1": 0.7706,
+        "precision": 0.7723,
+        "recall": 0.7689,
+        "accuracy": 0.9287,
+        "n_test": 294,
+        "low_sample": false,
+        "note": ""
+      },
+      {
+        "region": "Central & North Asia",
+        "n": 533,
+        "n_pos": 16,
+        "auc": 0.9221,
+        "f1": 0.5806,
+        "precision": 0.6,
+        "recall": 0.5625,
+        "accuracy": 0.9756,
+        "n_test": 119,
+        "low_sample": true,
+        "note": "Only 16 labelled plants - metrics are unstable; treat predictions in this region with caution."
+      },
+      {
+        "region": "East Asia",
+        "n": 2522,
+        "n_pos": 1400,
+        "auc": 0.8197,
+        "f1": 0.773,
+        "precision": 0.762,
+        "recall": 0.7843,
+        "accuracy": 0.7443,
+        "n_test": 477,
+        "low_sample": false,
+        "note": ""
+      },
+      {
+        "region": "Europe",
+        "n": 2453,
+        "n_pos": 1400,
+        "auc": 0.8819,
+        "f1": 0.8354,
+        "precision": 0.7987,
+        "recall": 0.8757,
+        "accuracy": 0.8031,
+        "n_test": 499,
+        "low_sample": false,
+        "note": ""
+      },
+      {
+        "region": "Latin America",
+        "n": 1179,
+        "n_pos": 398,
+        "auc": 0.9394,
+        "f1": 0.8036,
+        "precision": 0.8329,
+        "recall": 0.7764,
+        "accuracy": 0.8719,
+        "n_test": 227,
+        "low_sample": false,
+        "note": ""
+      },
+      {
+        "region": "Middle East",
+        "n": 2451,
+        "n_pos": 1400,
+        "auc": 0.8338,
+        "f1": 0.7986,
+        "precision": 0.7683,
+        "recall": 0.8314,
+        "accuracy": 0.7605,
+        "n_test": 476,
+        "low_sample": false,
+        "note": ""
+      },
+      {
+        "region": "North America",
+        "n": 2930,
+        "n_pos": 1400,
+        "auc": 0.8741,
+        "f1": 0.7873,
+        "precision": 0.7564,
+        "recall": 0.8207,
+        "accuracy": 0.7881,
+        "n_test": 597,
+        "low_sample": false,
+        "note": ""
+      },
+      {
+        "region": "Oceania",
+        "n": 439,
+        "n_pos": 104,
+        "auc": 0.9228,
+        "f1": 0.5974,
+        "precision": 0.92,
+        "recall": 0.4423,
+        "accuracy": 0.8588,
+        "n_test": 90,
+        "low_sample": true,
+        "note": "Only 104 labelled plants - metrics are unstable; treat predictions in this region with caution."
+      },
+      {
+        "region": "South Asia",
+        "n": 2383,
+        "n_pos": 1400,
+        "auc": 0.7613,
+        "f1": 0.7582,
+        "precision": 0.7264,
+        "recall": 0.7929,
+        "accuracy": 0.7029,
+        "n_test": 484,
+        "low_sample": false,
+        "note": ""
+      },
+      {
+        "region": "Southeast Asia",
+        "n": 878,
+        "n_pos": 470,
+        "auc": 0.8656,
+        "f1": 0.834,
+        "precision": 0.8138,
+        "recall": 0.8553,
+        "accuracy": 0.8178,
+        "n_test": 180,
+        "low_sample": false,
+        "note": ""
+      }
+    ],
+    "feature_importance": [
+      {
+        "feature": "log_access",
+        "label": "Travel time to city (log)",
+        "importance": 0.1319
+      },
+      {
+        "feature": "log_pop",
+        "label": "Population density (log)",
+        "importance": 0.0993
+      },
+      {
+        "feature": "log_lights",
+        "label": "Night-time lights (log)",
+        "importance": 0.0832
+      },
+      {
+        "feature": "lc_forest",
+        "label": "Land cover: Forest",
+        "importance": 0.0752
+      },
+      {
+        "feature": "slope",
+        "label": "Slope",
+        "importance": 0.0541
+      },
+      {
+        "feature": "lst",
+        "label": "Land surface temp.",
+        "importance": 0.0467
+      },
+      {
+        "feature": "lc_wetland",
+        "label": "Land cover: Wetland",
+        "importance": 0.0456
+      },
+      {
+        "feature": "ndbi",
+        "label": "NDBI",
+        "importance": 0.0371
+      },
+      {
+        "feature": "ndvi",
+        "label": "NDVI",
+        "importance": 0.0358
+      },
+      {
+        "feature": "lc_grass",
+        "label": "Land cover: Grass",
+        "importance": 0.0354
+      },
+      {
+        "feature": "lc_urban",
+        "label": "Land cover: Urban",
+        "importance": 0.0342
+      },
+      {
+        "feature": "lc_crop",
+        "label": "Land cover: Crop",
+        "importance": 0.0342
+      },
+      {
+        "feature": "lc_barren",
+        "label": "Land cover: Barren",
+        "importance": 0.0329
+      },
+      {
+        "feature": "lc_shrub",
+        "label": "Land cover: Shrub",
+        "importance": 0.0327
+      },
+      {
+        "feature": "ghi",
+        "label": "Solar irradiance (GHI)",
+        "importance": 0.0326
+      },
+      {
+        "feature": "aspect_equator",
+        "label": "Equator-facing index",
+        "importance": 0.0323
+      },
+      {
+        "feature": "temperature",
+        "label": "Air temperature",
+        "importance": 0.0307
+      },
+      {
+        "feature": "cloud_cover",
+        "label": "Cloud fraction",
+        "importance": 0.0303
+      },
+      {
+        "feature": "elevation",
+        "label": "Elevation",
+        "importance": 0.0278
+      },
+      {
+        "feature": "lc_savanna",
+        "label": "Land cover: Savanna",
+        "importance": 0.0246
+      },
+      {
+        "feature": "lc_water",
+        "label": "Land cover: Water",
+        "importance": 0.0217
+      },
+      {
+        "feature": "aspect_east",
+        "label": "East-facing index",
+        "importance": 0.0215
+      },
+      {
+        "feature": "lc_snow",
+        "label": "Land cover: Snow",
+        "importance": 0.0
+      }
+    ],
+    "shap_importance": [
+      {
+        "feature": "log_lights",
+        "label": "Night-time lights (log)",
+        "mean_abs_shap": 0.7747
+      },
+      {
+        "feature": "log_access",
+        "label": "Travel time to city (log)",
+        "mean_abs_shap": 0.623
+      },
+      {
+        "feature": "log_pop",
+        "label": "Population density (log)",
+        "mean_abs_shap": 0.3968
+      },
+      {
+        "feature": "slope",
+        "label": "Slope",
+        "mean_abs_shap": 0.3922
+      },
+      {
+        "feature": "cloud_cover",
+        "label": "Cloud fraction",
+        "mean_abs_shap": 0.3316
+      },
+      {
+        "feature": "ndbi",
+        "label": "NDBI",
+        "mean_abs_shap": 0.3004
+      },
+      {
+        "feature": "temperature",
+        "label": "Air temperature",
+        "mean_abs_shap": 0.2898
+      },
+      {
+        "feature": "ghi",
+        "label": "Solar irradiance (GHI)",
+        "mean_abs_shap": 0.2604
+      },
+      {
+        "feature": "ndvi",
+        "label": "NDVI",
+        "mean_abs_shap": 0.2314
+      },
+      {
+        "feature": "lst",
+        "label": "Land surface temp.",
+        "mean_abs_shap": 0.2266
+      },
+      {
+        "feature": "aspect_equator",
+        "label": "Equator-facing index",
+        "mean_abs_shap": 0.1796
+      },
+      {
+        "feature": "elevation",
+        "label": "Elevation",
+        "mean_abs_shap": 0.1458
+      },
+      {
+        "feature": "aspect_east",
+        "label": "East-facing index",
+        "mean_abs_shap": 0.0926
+      },
+      {
+        "feature": "lc_grass",
+        "label": "Land cover: Grass",
+        "mean_abs_shap": 0.0383
+      },
+      {
+        "feature": "lc_crop",
+        "label": "Land cover: Crop",
+        "mean_abs_shap": 0.0266
+      },
+      {
+        "feature": "lc_forest",
+        "label": "Land cover: Forest",
+        "mean_abs_shap": 0.0194
+      },
+      {
+        "feature": "lc_shrub",
+        "label": "Land cover: Shrub",
+        "mean_abs_shap": 0.0155
+      },
+      {
+        "feature": "lc_savanna",
+        "label": "Land cover: Savanna",
+        "mean_abs_shap": 0.0143
+      },
+      {
+        "feature": "lc_barren",
+        "label": "Land cover: Barren",
+        "mean_abs_shap": 0.0061
+      },
+      {
+        "feature": "lc_urban",
+        "label": "Land cover: Urban",
+        "mean_abs_shap": 0.0052
+      },
+      {
+        "feature": "lc_water",
+        "label": "Land cover: Water",
+        "mean_abs_shap": 0.001
+      },
+      {
+        "feature": "lc_wetland",
+        "label": "Land cover: Wetland",
+        "mean_abs_shap": 0.0004
+      },
+      {
+        "feature": "lc_snow",
+        "label": "Land cover: Snow",
+        "mean_abs_shap": 0.0
+      }
+    ],
+    "heatmap": {
+      "mean": 18.9387,
+      "high_pct": 7.1151,
+      "by_region": {
+        "Africa": 24.8,
+        "Central & North Asia": 6.2,
+        "East Asia": 26.5,
+        "Europe": 17.3,
+        "Latin America": 21.0,
+        "Middle East": 32.3,
+        "North America": 16.1,
+        "Oceania": 13.7,
+        "South Asia": 34.2,
+        "Southeast Asia": 21.0
+      }
+    }
+  },
+  "tamil_nadu": {
+    "n_total": 4420,
+    "n_pos": 1768,
+    "n_train": 3536,
+    "n_test": 884,
+    "variants": {
+      "clean": {
+        "features": [
+          "ghi",
+          "temperature",
+          "cloud_cover",
+          "elevation",
+          "slope",
+          "aspect_south",
+          "aspect_east",
+          "ndvi",
+          "ndbi",
+          "lst",
+          "dist_road_km",
+          "dist_powerline_km",
+          "dist_substation_km"
+        ],
+        "models": {
+          "Random Forest": {
+            "test": {
+              "accuracy": 0.8428,
+              "precision": 0.8413,
+              "recall": 0.7486,
+              "f1": 0.7922,
+              "roc_auc": 0.9312,
+              "confusion_matrix": [
+                [
+                  480,
+                  50
+                ],
+                [
+                  89,
+                  265
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "cv_stratified_auc": {
+              "mean": 0.9704,
+              "std": 0.0049,
+              "folds": [
+                0.9613,
+                0.972,
+                0.974,
+                0.9699,
+                0.9749
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.9278,
+              "std": 0.0141,
+              "folds": [
+                0.9189,
+                0.914,
+                0.9531,
+                0.933,
+                0.9201
+              ]
+            },
+            "test_on_preconstruction_land": {
+              "accuracy": 0.8428,
+              "precision": 0.8413,
+              "recall": 0.7486,
+              "f1": 0.7922,
+              "roc_auc": 0.9312,
+              "confusion_matrix": [
+                [
+                  480,
+                  50
+                ],
+                [
+                  89,
+                  265
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "fit_seconds": 15.5
+          },
+          "XGBoost": {
+            "test": {
+              "accuracy": 0.8281,
+              "precision": 0.8156,
+              "recall": 0.7373,
+              "f1": 0.7745,
+              "roc_auc": 0.9273,
+              "confusion_matrix": [
+                [
+                  471,
+                  59
+                ],
+                [
+                  93,
+                  261
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "cv_stratified_auc": {
+              "mean": 0.9761,
+              "std": 0.0035,
+              "folds": [
+                0.9701,
+                0.9744,
+                0.98,
+                0.9784,
+                0.9777
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.9246,
+              "std": 0.0116,
+              "folds": [
+                0.9174,
+                0.9103,
+                0.9419,
+                0.9342,
+                0.9194
+              ]
+            },
+            "test_on_preconstruction_land": {
+              "accuracy": 0.8281,
+              "precision": 0.8156,
+              "recall": 0.7373,
+              "f1": 0.7745,
+              "roc_auc": 0.9273,
+              "confusion_matrix": [
+                [
+                  471,
+                  59
+                ],
+                [
+                  93,
+                  261
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "fit_seconds": 5.1
+          }
+        }
+      },
+      "leaky": {
+        "features": [
+          "ghi",
+          "temperature",
+          "cloud_cover",
+          "elevation",
+          "slope",
+          "aspect_south",
+          "aspect_east",
+          "ndvi",
+          "ndbi",
+          "lst",
+          "dist_road_km",
+          "dist_powerline_km",
+          "dist_substation_km"
+        ],
+        "models": {
+          "Random Forest": {
+            "test": {
+              "accuracy": 0.9253,
+              "precision": 0.9211,
+              "recall": 0.8898,
+              "f1": 0.9052,
+              "roc_auc": 0.9814,
+              "confusion_matrix": [
+                [
+                  503,
+                  27
+                ],
+                [
+                  39,
+                  315
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "cv_stratified_auc": {
+              "mean": 0.9904,
+              "std": 0.003,
+              "folds": [
+                0.9862,
+                0.9895,
+                0.9904,
+                0.9903,
+                0.9957
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.9837,
+              "std": 0.0046,
+              "folds": [
+                0.9841,
+                0.9786,
+                0.9873,
+                0.99,
+                0.9784
+              ]
+            },
+            "test_on_preconstruction_land": {
+              "accuracy": 0.7229,
+              "precision": 0.9037,
+              "recall": 0.3446,
+              "f1": 0.499,
+              "roc_auc": 0.9021,
+              "confusion_matrix": [
+                [
+                  517,
+                  13
+                ],
+                [
+                  232,
+                  122
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "fit_seconds": 15.0
+          },
+          "XGBoost": {
+            "test": {
+              "accuracy": 0.9253,
+              "precision": 0.9235,
+              "recall": 0.887,
+              "f1": 0.9049,
+              "roc_auc": 0.9833,
+              "confusion_matrix": [
+                [
+                  504,
+                  26
+                ],
+                [
+                  40,
+                  314
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "cv_stratified_auc": {
+              "mean": 0.9909,
+              "std": 0.0027,
+              "folds": [
+                0.9889,
+                0.9895,
+                0.9886,
+                0.9919,
+                0.9958
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.9832,
+              "std": 0.0038,
+              "folds": [
+                0.984,
+                0.9787,
+                0.9859,
+                0.9883,
+                0.9791
+              ]
+            },
+            "test_on_preconstruction_land": {
+              "accuracy": 0.7387,
+              "precision": 0.9073,
+              "recall": 0.387,
+              "f1": 0.5426,
+              "roc_auc": 0.9133,
+              "confusion_matrix": [
+                [
+                  516,
+                  14
+                ],
+                [
+                  217,
+                  137
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "fit_seconds": 4.5
+          }
+        }
+      },
+      "as_specified": {
+        "features": [
+          "ghi",
+          "temperature",
+          "cloud_cover",
+          "elevation",
+          "slope",
+          "aspect_south",
+          "aspect_east",
+          "ndvi",
+          "ndbi",
+          "lst",
+          "lc_tree",
+          "lc_shrub",
+          "lc_grass",
+          "lc_crop",
+          "lc_built",
+          "lc_bare",
+          "lc_water",
+          "lc_wetland",
+          "lc_mangrove",
+          "dist_road_km",
+          "dist_powerline_km",
+          "dist_substation_km"
+        ],
+        "models": {
+          "Random Forest": {
+            "test": {
+              "accuracy": 0.9367,
+              "precision": 0.9382,
+              "recall": 0.9011,
+              "f1": 0.9193,
+              "roc_auc": 0.984,
+              "confusion_matrix": [
+                [
+                  509,
+                  21
+                ],
+                [
+                  35,
+                  319
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "cv_stratified_auc": {
+              "mean": 0.9913,
+              "std": 0.003,
+              "folds": [
+                0.9876,
+                0.9911,
+                0.9898,
+                0.9912,
+                0.9967
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.9857,
+              "std": 0.004,
+              "folds": [
+                0.9856,
+                0.9817,
+                0.99,
+                0.9905,
+                0.9809
+              ]
+            },
+            "fit_seconds": 14.7
+          },
+          "XGBoost": {
+            "test": {
+              "accuracy": 0.9265,
+              "precision": 0.9238,
+              "recall": 0.8898,
+              "f1": 0.9065,
+              "roc_auc": 0.9865,
+              "confusion_matrix": [
+                [
+                  504,
+                  26
+                ],
+                [
+                  39,
+                  315
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "cv_stratified_auc": {
+              "mean": 0.9915,
+              "std": 0.0024,
+              "folds": [
+                0.9889,
+                0.9911,
+                0.9895,
+                0.9924,
+                0.9956
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.9856,
+              "std": 0.0033,
+              "folds": [
+                0.9854,
+                0.9815,
+                0.9888,
+                0.9899,
+                0.9825
+              ]
+            },
+            "fit_seconds": 5.2
+          }
+        }
+      },
+      "physical_only": {
+        "features": [
+          "ghi",
+          "temperature",
+          "cloud_cover",
+          "elevation",
+          "slope",
+          "aspect_south",
+          "aspect_east",
+          "ndvi",
+          "ndbi",
+          "lst"
+        ],
+        "models": {
+          "Random Forest": {
+            "test": {
+              "accuracy": 0.8145,
+              "precision": 0.7714,
+              "recall": 0.7627,
+              "f1": 0.767,
+              "roc_auc": 0.883,
+              "confusion_matrix": [
+                [
+                  450,
+                  80
+                ],
+                [
+                  84,
+                  270
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "cv_stratified_auc": {
+              "mean": 0.9548,
+              "std": 0.0103,
+              "folds": [
+                0.9364,
+                0.9671,
+                0.9531,
+                0.9608,
+                0.9567
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.8812,
+              "std": 0.0243,
+              "folds": [
+                0.8699,
+                0.845,
+                0.9089,
+                0.9076,
+                0.8746
+              ]
+            },
+            "test_on_preconstruction_land": {
+              "accuracy": 0.8145,
+              "precision": 0.7714,
+              "recall": 0.7627,
+              "f1": 0.767,
+              "roc_auc": 0.883,
+              "confusion_matrix": [
+                [
+                  450,
+                  80
+                ],
+                [
+                  84,
+                  270
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "fit_seconds": 15.4
+          },
+          "XGBoost": {
+            "test": {
+              "accuracy": 0.7952,
+              "precision": 0.7613,
+              "recall": 0.7119,
+              "f1": 0.7358,
+              "roc_auc": 0.8674,
+              "confusion_matrix": [
+                [
+                  451,
+                  79
+                ],
+                [
+                  102,
+                  252
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "cv_stratified_auc": {
+              "mean": 0.9607,
+              "std": 0.0086,
+              "folds": [
+                0.9444,
+                0.9692,
+                0.9629,
+                0.9656,
+                0.9617
+              ]
+            },
+            "cv_spatial_auc": {
+              "mean": 0.8727,
+              "std": 0.027,
+              "folds": [
+                0.8698,
+                0.8299,
+                0.9087,
+                0.8927,
+                0.8623
+              ]
+            },
+            "test_on_preconstruction_land": {
+              "accuracy": 0.7952,
+              "precision": 0.7613,
+              "recall": 0.7119,
+              "f1": 0.7358,
+              "roc_auc": 0.8674,
+              "confusion_matrix": [
+                [
+                  451,
+                  79
+                ],
+                [
+                  102,
+                  252
+                ]
+              ],
+              "n": 884,
+              "n_pos": 354
+            },
+            "fit_seconds": 5.7
+          }
+        }
+      }
+    },
+    "deployed_model": "Random Forest",
+    "ahp_test": {
+      "accuracy": 0.5238,
+      "precision": 0.4568,
+      "recall": 1.0,
+      "f1": 0.6271,
+      "roc_auc": 0.7989,
+      "confusion_matrix": [
+        [
+          109,
+          421
+        ],
+        [
+          0,
+          354
+        ]
+      ],
+      "n": 884,
+      "n_pos": 354
+    },
+    "feature_importance": [
+      {
+        "feature": "lst",
+        "label": "Land surface temp.",
+        "importance": 0.1779
+      },
+      {
+        "feature": "dist_substation_km",
+        "label": "Distance to substation",
+        "importance": 0.1389
+      },
+      {
+        "feature": "cloud_cover",
+        "label": "Cloud cover",
+        "importance": 0.1352
+      },
+      {
+        "feature": "ndvi",
+        "label": "NDVI",
+        "importance": 0.1351
+      },
+      {
+        "feature": "ghi",
+        "label": "Solar irradiance (GHI)",
+        "importance": 0.0706
+      },
+      {
+        "feature": "elevation",
+        "label": "Elevation",
+        "importance": 0.0656
+      },
+      {
+        "feature": "ndbi",
+        "label": "NDBI",
+        "importance": 0.0635
+      },
+      {
+        "feature": "dist_road_km",
+        "label": "Distance to road",
+        "importance": 0.055
+      },
+      {
+        "feature": "dist_powerline_km",
+        "label": "Distance to power line",
+        "importance": 0.0549
+      },
+      {
+        "feature": "temperature",
+        "label": "Air temperature",
+        "importance": 0.0516
+      },
+      {
+        "feature": "slope",
+        "label": "Slope",
+        "importance": 0.021
+      },
+      {
+        "feature": "aspect_east",
+        "label": "East-facing index",
+        "importance": 0.0162
+      },
+      {
+        "feature": "aspect_south",
+        "label": "South-facing index",
+        "importance": 0.0145
+      }
+    ],
+    "shap_importance": [
+      {
+        "feature": "dist_substation_km",
+        "label": "Distance to substation",
+        "mean_abs_shap": 0.0973
+      },
+      {
+        "feature": "lst",
+        "label": "Land surface temp.",
+        "mean_abs_shap": 0.0957
+      },
+      {
+        "feature": "cloud_cover",
+        "label": "Cloud cover",
+        "mean_abs_shap": 0.0722
+      },
+      {
+        "feature": "ndvi",
+        "label": "NDVI",
+        "mean_abs_shap": 0.0673
+      },
+      {
+        "feature": "ghi",
+        "label": "Solar irradiance (GHI)",
+        "mean_abs_shap": 0.0412
+      },
+      {
+        "feature": "dist_powerline_km",
+        "label": "Distance to power line",
+        "mean_abs_shap": 0.0339
+      },
+      {
+        "feature": "dist_road_km",
+        "label": "Distance to road",
+        "mean_abs_shap": 0.0326
+      },
+      {
+        "feature": "elevation",
+        "label": "Elevation",
+        "mean_abs_shap": 0.0323
+      },
+      {
+        "feature": "ndbi",
+        "label": "NDBI",
+        "mean_abs_shap": 0.0296
+      },
+      {
+        "feature": "temperature",
+        "label": "Air temperature",
+        "mean_abs_shap": 0.0193
+      },
+      {
+        "feature": "slope",
+        "label": "Slope",
+        "mean_abs_shap": 0.0054
+      },
+      {
+        "feature": "aspect_east",
+        "label": "East-facing index",
+        "mean_abs_shap": 0.0031
+      },
+      {
+        "feature": "aspect_south",
+        "label": "South-facing index",
+        "mean_abs_shap": 0.0028
+      }
+    ],
+    "heatmap": {
+      "mean": 15.3432,
+      "high_pct": 3.0811
+    },
+    "global_vs_local": {
+      "local": {
+        "accuracy": 0.8428,
+        "precision": 0.8413,
+        "recall": 0.7486,
+        "f1": 0.7922,
+        "roc_auc": 0.9312,
+        "confusion_matrix": [
+          [
+            480,
+            50
+          ],
+          [
+            89,
+            265
+          ]
+        ],
+        "n": 884,
+        "n_pos": 354
+      },
+      "global": {
+        "accuracy": 0.7115,
+        "precision": 0.5832,
+        "recall": 0.9802,
+        "f1": 0.7313,
+        "roc_auc": 0.8602,
+        "confusion_matrix": [
+          [
+            282,
+            248
+          ],
+          [
+            7,
+            347
+          ]
+        ],
+        "n": 884,
+        "n_pos": 354
+      },
+      "ahp": {
+        "accuracy": 0.5238,
+        "precision": 0.4568,
+        "recall": 1.0,
+        "f1": 0.6271,
+        "roc_auc": 0.7989,
+        "confusion_matrix": [
+          [
+            109,
+            421
+          ],
+          [
+            0,
+            354
+          ]
+        ],
+        "n": 884,
+        "n_pos": 354
+      },
+      "note": "Evaluated on the Tamil Nadu site-grouped test split. The global model is trained on the Kruitwagen inventory (independent labels, 2008-10 baseline, MODIS 500 m), the local model on OSM Tamil Nadu plants (2013-15 Landsat baseline, 30 m + OSM grid distances)."
+    }
+  }
+}

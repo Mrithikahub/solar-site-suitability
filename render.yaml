@@ -1,0 +1,34 @@
+# Render Blueprint for the Solarsite API (FastAPI).
+# Render dashboard -> New -> Blueprint -> select this repository.
+# Values marked `sync: false` are entered by you in the dashboard (they are secrets or deployment-specific).
+services:
+  - type: web
+    name: solarsite-api
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install --upgrade pip && pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      # Google Earth Engine (live per-click extraction). Without these the API
+      # still works and answers every request from the cached 0.5 degree grid.
+      - key: GEE_PROJECT_ID
+        sync: false
+      - key: GEE_SERVICE_ACCOUNT_JSON
+        sync: false
+      - key: LIVE_GEE
+        value: "1"
+      - key: LIVE_GEE_TIMEOUT_S
+        value: "5"
+      # CORS: your Vercel production URL, e.g. https://solarsite.vercel.app
+      - key: ALLOWED_ORIGINS
+        sync: false
+      # also allow Vercel preview deployments
+      - key: ALLOWED_ORIGIN_REGEX
+        value: https://.*\.vercel\.app
+      - key: GEOCODER_USER_AGENT
+        value: solarsite/1.0 (student remote-sensing project; https://github.com/Mrithikahub)

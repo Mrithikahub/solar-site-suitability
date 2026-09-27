@@ -1,0 +1,13 @@
+# Normalise text files to LF in the repository (Render/Vercel build on Linux)
+* text=auto eol=lf
+
+# Binary artifacts
+*.pkl binary
+*.npy binary
+*.npz binary
+*.gz binary
+*.png binary
+*.webp binary
+*.jpg binary
+*.pdf binary
+*.ipynb text eol=lf

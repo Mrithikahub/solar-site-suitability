@@ -1,0 +1,20 @@
+# Backend runtime (Render). Versions are pinned to the environment the models were
+# trained in: pickled scikit-learn / XGBoost models must be loaded with the same versions.
+fastapi==0.141.1
+uvicorn[standard]==0.54.0
+pydantic==2.13.5
+python-dotenv==1.2.3
+numpy==2.4.6
+pandas==3.0.6
+scipy==1.17.1
+scikit-learn==1.9.1
+xgboost==3.2.0
+shap==0.51.0
+joblib==1.6.0
+pyproj==3.7.2
+shapely==2.1.2
+pillow==12.3.0
+reportlab==5.0.1
+matplotlib==3.11.2
+httpx==0.28.1
+earthengine-api==1.7.45

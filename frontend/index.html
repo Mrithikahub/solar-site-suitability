@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Solar PV site suitability for any place on Earth, from satellite remote sensing and machine learning." />
+    <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f7f7f6" media="(prefers-color-scheme: light)" />
+    <title>Solarsite - Satellite solar site suitability</title>
+    <script>
+      // apply the saved / system theme before first paint (no flash)
+      (function () {
+        try {
+          var t = localStorage.getItem('solarsite-theme')
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
+          document.documentElement.classList.toggle('dark', dark)
+        } catch (e) {}
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

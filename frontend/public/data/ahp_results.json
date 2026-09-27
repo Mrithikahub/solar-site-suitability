@@ -1,0 +1,192 @@
+{
+  "tamil_nadu": {
+    "criteria": [
+      "GHI",
+      "Slope",
+      "Land cover",
+      "Dist. substation",
+      "Dist. road",
+      "NDVI",
+      "Air temperature"
+    ],
+    "matrix": [
+      [
+        1.0,
+        2.0,
+        2.0,
+        3.0,
+        5.0,
+        4.0,
+        6.0
+      ],
+      [
+        0.5,
+        1.0,
+        1.0,
+        2.0,
+        4.0,
+        3.0,
+        5.0
+      ],
+      [
+        0.5,
+        1.0,
+        1.0,
+        2.0,
+        4.0,
+        3.0,
+        5.0
+      ],
+      [
+        0.3333,
+        0.5,
+        0.5,
+        1.0,
+        3.0,
+        2.0,
+        4.0
+      ],
+      [
+        0.2,
+        0.25,
+        0.25,
+        0.3333,
+        1.0,
+        0.5,
+        2.0
+      ],
+      [
+        0.25,
+        0.3333,
+        0.3333,
+        0.5,
+        2.0,
+        1.0,
+        3.0
+      ],
+      [
+        0.1667,
+        0.2,
+        0.2,
+        0.25,
+        0.5,
+        0.3333,
+        1.0
+      ]
+    ],
+    "weights": {
+      "GHI": 0.3164,
+      "Slope": 0.1983,
+      "Land cover": 0.1983,
+      "Dist. substation": 0.1228,
+      "Dist. road": 0.051,
+      "NDVI": 0.0782,
+      "Air temperature": 0.035
+    },
+    "lambda_max": 7.1297616696778015,
+    "CI": 0.02162694494630024,
+    "CR": 0.016384049201742606,
+    "RI": 1.32,
+    "standardisation": {
+      "GHI": "benefit, 4.5 -> 5.8 kWh/m\u00b2/day",
+      "Slope": "cost, 0 -> 10\u00b0",
+      "Land cover": "look-up (bare 1.0, grass 0.9, shrub 0.8, crop 0.55, tree 0.15)",
+      "Dist. substation": "cost, 0 -> 20 km",
+      "Dist. road": "cost, 0 -> 5 km",
+      "NDVI": "cost, 0.1 -> 0.6",
+      "Air temperature": "cost, 25 -> 35 \u00b0C"
+    },
+    "max_slope_deg": 15.0,
+    "map_summary": {
+      "mean_score": 59.43,
+      "excluded_pct": 10.5,
+      "high_pct": 39.05
+    }
+  },
+  "global": {
+    "criteria": [
+      "GHI",
+      "Slope",
+      "Land cover",
+      "Accessibility",
+      "NDVI",
+      "Air temperature"
+    ],
+    "matrix": [
+      [
+        1.0,
+        2.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0
+      ],
+      [
+        0.5,
+        1.0,
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ],
+      [
+        0.5,
+        1.0,
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ],
+      [
+        0.3333,
+        0.5,
+        0.5,
+        1.0,
+        2.0,
+        3.0
+      ],
+      [
+        0.25,
+        0.3333,
+        0.3333,
+        0.5,
+        1.0,
+        2.0
+      ],
+      [
+        0.2,
+        0.25,
+        0.25,
+        0.3333,
+        0.5,
+        1.0
+      ]
+    ],
+    "weights": {
+      "GHI": 0.3422,
+      "Slope": 0.2057,
+      "Land cover": 0.2057,
+      "Accessibility": 0.1219,
+      "NDVI": 0.0753,
+      "Air temperature": 0.0492
+    },
+    "lambda_max": 6.0719431920937055,
+    "CI": 0.014388638418741096,
+    "CR": 0.011603740660275077,
+    "RI": 1.24,
+    "standardisation": {
+      "GHI": "benefit, 2.5 -> 6.5 kWh/m\u00b2/day",
+      "Slope": "cost, 0 -> 10\u00b0",
+      "Land cover": "IGBP look-up (barren 1.0, grass/open shrub 0.9, savanna 0.8, crop 0.55, forest 0.15)",
+      "Accessibility": "cost, 30 -> 360 min to nearest city",
+      "NDVI": "cost, 0.1 -> 0.7",
+      "Air temperature": "trapezoid: 0 at -10 \u00b0C, 1 between 10-25 \u00b0C, 0 at 40 \u00b0C"
+    },
+    "max_slope_deg": 15.0,
+    "map_summary": {
+      "mean_score": 46.39,
+      "excluded_pct": 18.31,
+      "high_pct": 27.48
+    }
+  }
+}
