@@ -101,7 +101,7 @@ export function LayerPanel({
                   />
                   <p className="text-[11.5px] leading-snug text-muted">{METRIC_HELP[metric]}</p>
                   {tn && metric === 'development' && (
-                    <p className="text-[11.5px] leading-snug text-warn">Development likelihood has no Tamil Nadu high-res layer; the global grid is shown.</p>
+                    <p className="text-[11.5px] leading-snug text-warn">Development likelihood has no high-res layer; the global grid is shown.</p>
                   )}
                 </div>
 
@@ -125,23 +125,24 @@ export function LayerPanel({
                     options={[{ value: 'map', label: 'Map' }, { value: 'satellite', label: 'Satellite imagery' }]} />
                 </div>
 
-                <label className="flex cursor-pointer items-center justify-between gap-3 rounded-2xl bg-ink/[0.04] px-3.5 py-3 ring-1 ring-line dark:bg-white/[0.04]">
-                  <span>
-                    <span className="block text-[13px] font-medium">Tamil Nadu at 285 m</span>
-                    <span className="block text-[11.5px] text-muted">Sentinel-2, Landsat, SRTM case-study layers</span>
-                  </span>
-                  <span className="relative inline-flex h-6 w-10 shrink-0 items-center">
-                    <input type="checkbox" className="peer sr-only" checked={tn} onChange={(e) => setTn(e.target.checked)} />
-                    <span className="absolute inset-0 rounded-full bg-ink/20 ring-1 ring-line-strong transition-colors duration-300 peer-checked:bg-accent dark:bg-white/20" />
-                    <span className="absolute left-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] peer-checked:translate-x-4" />
-                  </span>
-                </label>
-
                 <div className="space-y-4 border-t border-line pt-4">
                   {showScore && scoreLayer && <Legend layer={scoreLayer} />}
                   {ctxLayer && <Legend layer={ctxLayer} />}
                   {ctxLayer && <p className="text-[10.5px] text-muted">Source: {ctxLayer.source}</p>}
                 </div>
+
+                <label className="flex cursor-pointer items-start gap-2.5 pt-1 text-[11.5px] leading-snug text-muted hover:text-ink-2">
+                  <input
+                    type="checkbox"
+                    checked={tn}
+                    onChange={(e) => setTn(e.target.checked)}
+                    className="mt-0.5 h-3.5 w-3.5 shrink-0 rounded accent-[var(--accent)]"
+                  />
+                  <span>
+                    High-res layers: available for select regions
+                    {tn && <span className="block text-[10.5px]">Showing Tamil Nadu, India (10-30 m)</span>}
+                  </span>
+                </label>
               </div>
             </motion.div>
           )}

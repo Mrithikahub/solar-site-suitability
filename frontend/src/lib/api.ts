@@ -81,7 +81,8 @@ export interface Prediction {
   energy: Energy | null
   provenance: Provenance
   scores: { suitability: ScoreEntry; development: ScoreEntry; ahp?: ScoreEntry }
-  tamil_nadu_local?: { score: number; class: ScoreClass; model: string; note: string }
+  /** high-res regional model, only returned inside regions that have 10-30 m layers */
+  tamil_nadu_local?: { score: number; class: ScoreClass; model: string; note: string; label?: string }
   cache_hit?: boolean
 }
 

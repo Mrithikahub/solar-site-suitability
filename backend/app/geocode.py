@@ -33,7 +33,7 @@ from .cache import TTLCache
 
 PHOTON_URL = os.getenv("PHOTON_URL", "https://photon.komoot.io/api/")
 NOMINATIM_URL = os.getenv("NOMINATIM_URL", "https://nominatim.openstreetmap.org/search")
-USER_AGENT = os.getenv("GEOCODER_USER_AGENT", "solar-site-suitability/1.0 (student remote-sensing project)")
+USER_AGENT = os.getenv("GEOCODER_USER_AGENT", "solarsite/1.0 (+https://github.com/Mrithikahub/solar-site-suitability)")
 
 _cache = TTLCache(maxsize=8192, ttl_s=7 * 24 * 3600)
 _rate = {"photon": (threading.Lock(), 0.25), "nominatim": (threading.Lock(), 1.05)}
@@ -280,35 +280,48 @@ def _covers(cands: list[dict], q: str) -> bool:
 # Coordinates: centroid of the largest panel polygon in the Kruitwagen et al.
 # (2021) inventory where available, otherwise the OSM site location (parks
 # completed after the 2018 inventory). Capacities are published nameplate figures.
+# `featured` parks appear as quick-pick chips on the map (a globally balanced set);
+# every park is searchable.
 FAMOUS_PARKS = [
     {"name": "Bhadla Solar Park", "aliases": ["bhadla", "badla"], "lat": 27.4745, "lon": 71.9726,
-     "place": "Jodhpur, Rajasthan, India", "capacity_mw": 2245},
+     "place": "Jodhpur, Rajasthan, India", "capacity_mw": 2245, "featured": True},
     {"name": "Kamuthi Solar Power Project", "aliases": ["kamuthi"], "lat": 9.3322, "lon": 78.3899,
      "place": "Ramanathapuram, Tamil Nadu, India", "capacity_mw": 648},
     {"name": "Pavagada Solar Park", "aliases": ["pavagada", "shakti sthala"], "lat": 14.2382, "lon": 77.4606,
      "place": "Tumkur, Karnataka, India", "capacity_mw": 2050},
     {"name": "Benban Solar Park", "aliases": ["benban"], "lat": 24.4110, "lon": 32.7102,
-     "place": "Aswan, Egypt", "capacity_mw": 1650},
+     "place": "Aswan, Egypt", "capacity_mw": 1650, "featured": True},
     {"name": "Tengger Desert Solar Park", "aliases": ["tengger"], "lat": 37.5592, "lon": 105.0365,
-     "place": "Zhongwei, Ningxia, China", "capacity_mw": 1547},
+     "place": "Zhongwei, Ningxia, China", "capacity_mw": 1547, "featured": True},
     {"name": "Noor Ouarzazate Solar Complex", "aliases": ["noor", "ouarzazate"], "lat": 31.0400, "lon": -6.8635,
-     "place": "Ouarzazate, Morocco", "capacity_mw": 580},
+     "place": "Ouarzazate, Morocco", "capacity_mw": 580, "featured": True},
     {"name": "Solar Star", "aliases": ["solar star"], "lat": 34.8276, "lon": -118.4408,
-     "place": "Rosamond, California, USA", "capacity_mw": 579},
+     "place": "Rosamond, California, USA", "capacity_mw": 579, "featured": True},
     {"name": "Kurnool Ultra Mega Solar Park", "aliases": ["kurnool"], "lat": 15.6724, "lon": 78.2923,
      "place": "Kurnool, Andhra Pradesh, India", "capacity_mw": 1000},
     {"name": "Rewa Ultra Mega Solar", "aliases": ["rewa"], "lat": 24.4774, "lon": 81.5667,
      "place": "Rewa, Madhya Pradesh, India", "capacity_mw": 750},
+    {"name": "Mohammed bin Rashid Al Maktoum Solar Park", "aliases": ["mohammed bin rashid", "maktoum", "mbr solar"],
+     "lat": 24.7590, "lon": 55.3829, "place": "Dubai, United Arab Emirates", "capacity_mw": None, "featured": True},
+    {"name": "Villanueva Solar Park", "aliases": ["villanueva"], "lat": 25.5992, "lon": -103.0323,
+     "place": "Viesca, Coahuila, Mexico", "capacity_mw": 828, "featured": True},
+    {"name": "Cestas Solar Farm", "aliases": ["cestas"], "lat": 44.7255, "lon": -0.8156,
+     "place": "Cestas, Gironde, France", "capacity_mw": 300, "featured": True},
+    {"name": "Topaz Solar Farm", "aliases": ["topaz"], "lat": 35.3687, "lon": -120.0326,
+     "place": "San Luis Obispo County, California, USA", "capacity_mw": 550},
+    {"name": "Longyangxia Solar Park", "aliases": ["longyangxia"], "lat": 36.0238, "lon": 100.5128,
+     "place": "Gonghe, Qinghai, China", "capacity_mw": 850},
 ]
 _PARK_GENERIC = {"solar", "park", "plant", "power", "project", "ultra", "mega", "farm", "complex", "pv"}
 
 
-def famous_parks() -> list[dict]:
-    return [_park_result(p) for p in FAMOUS_PARKS]
+def famous_parks(featured_only: bool = True) -> list[dict]:
+    return [_park_result(p) for p in FAMOUS_PARKS if p.get("featured") or not featured_only]
 
 
 def _park_result(p: dict) -> dict:
-    return {"name": p["name"], "display_name": f"{p['capacity_mw']:,} MW solar park, {p['place']}",
+    size = f"{p['capacity_mw']:,} MW solar park" if p.get("capacity_mw") else "Multi-phase solar park"
+    return {"name": p["name"], "display_name": f"{size}, {p['place']}",
             "lat": p["lat"], "lon": p["lon"], "type": "solar park", "category": "power", "osm_value": "plant",
             "kind": "point", "bbox": None, "zoom": 15, "source": "curated", "capacity_mw": p["capacity_mw"]}
 
@@ -325,7 +338,7 @@ def _match_parks(q: str) -> list[dict]:
             at = alias.split()
             if all(_fuzzy_in(a, qt) for a in at if a not in _PARK_GENERIC) and any(a not in _PARK_GENERIC for a in at):
                 hit = True
-            elif alias == "solar star" and "solar star" in qn:
+            elif " " in alias and alias in qn:
                 hit = True
             elif len(qn) >= 3 and len(qt) == 1 and alias.startswith(qt[0]):
                 hit = True

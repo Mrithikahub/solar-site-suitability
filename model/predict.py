@@ -326,5 +326,6 @@ class Predictor:
         if tn is not None:
             out["tamil_nadu_local"] = {"score": round(tn, 1), "class": self.classify(tn),
                                        "model": self.tn["bundle"]["model_name"],
-                                       "note": "Local Tamil Nadu model (~285 m raster, OSM grid distances)"}
+                                       "label": "High-res regional model",
+                                       "note": "Available for select regions: 10-30 m imagery and local grid distances (Tamil Nadu, India)"}
         return out

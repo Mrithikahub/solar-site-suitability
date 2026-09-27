@@ -8,7 +8,6 @@ import { cx, EASE, IconButton } from './ui'
 const LINKS = [
   { to: '/map', label: 'Map' },
   { to: '/compare', label: 'Compare' },
-  { to: '/tamil-nadu', label: 'Tamil Nadu' },
   { to: '/methodology', label: 'Methodology' },
 ]
 

@@ -1,7 +1,9 @@
 import { Warning } from '@phosphor-icons/react'
 import { useEffect, useState } from 'react'
 import { Bar, BarChart, CartesianGrid, Cell, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { Bezel, cx, Reveal, Segmented } from '../components/ui'
+import { useLocation } from 'react-router-dom'
+import { CaseStudy } from '../components/CaseStudy'
+import { Bezel, cx, Reveal } from '../components/ui'
 import { staticJson } from '../lib/api'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,20 +21,18 @@ const TOC = [
   ['regions', 'Performance by region'],
   ['explain', 'Explainability'],
   ['energy', 'Energy estimate'],
+  ['case-study', 'High-res case study'],
   ['limits', 'Limitations'],
 ] as const
 
 const SOURCES = [
-  { sensor: 'Sentinel-2 MSI', product: 'L2A surface reflectance', bands: 'B4 red, B8 NIR, B11 SWIR-1', res: '10-20 m', use: 'NDVI, NDBI, true colour (Tamil Nadu)' },
-  { sensor: 'Landsat 8/9 OLI/TIRS', product: 'Collection 2 Level 2', bands: 'SR_B4-B6, ST_B10', res: '30 m (thermal 100 m)', use: 'LST, 2013-15 baseline indices (Tamil Nadu)' },
   { sensor: 'MODIS Terra', product: 'MOD13A1, MOD09A1, MOD11A2, MCD12Q1, MOD08_M3', bands: 'NDVI, b2 NIR, b6 SWIR, LST_Day, LC_Type1, cloud fraction', res: '500 m - 1°', use: 'Global spectral, thermal, land cover, cloud' },
   { sensor: 'ERA5-Land', product: 'Monthly aggregates, 2005-2024', bands: 'surface_solar_radiation_downwards, temperature_2m', res: '~9 km', use: 'Global irradiance (GHI) and air temperature' },
   { sensor: 'Copernicus DEM', product: 'GLO-30 (TanDEM-X X-band InSAR)', bands: 'DEM', res: '30 m', use: 'Global elevation, slope, aspect (covers > 60° N)' },
-  { sensor: 'SRTM', product: 'GL1 v3 (C-band InSAR)', bands: 'elevation', res: '30 m', use: 'Tamil Nadu terrain' },
   { sensor: 'VIIRS DNB', product: 'Monthly stray-light corrected', bands: 'avg_rad', res: '~460 m', use: 'Night-time lights (development proxy)' },
   { sensor: 'GHSL', product: 'P2023A population', bands: 'population_count', res: '100 m', use: 'Population density (development proxy)' },
   { sensor: 'ESA WorldCover', product: 'v200 (2021)', bands: 'Map', res: '10 m', use: 'Exclusions and display' },
-  { sensor: 'NASA POWER', product: 'Climatology API', bands: 'ALLSKY_SFC_SW_DWN, T2M, CLOUD_AMT', res: '0.5-1°', use: 'Tamil Nadu climate' },
+  { sensor: 'Malaria Atlas Project', product: 'Accessibility to cities 2015', bands: 'travel time (min)', res: '~1 km', use: 'Access to demand (development proxy)' },
 ]
 
 function H2({ id, children }: { id: string; children: React.ReactNode }) {
@@ -63,14 +63,12 @@ function Figure({ src, alt, caption, className }: { src: string; alt: string; ca
   )
 }
 
-function AhpMatrix({ ahp }: { ahp: Json }) {
-  const [scope, setScope] = useState<'global' | 'tamil_nadu'>('global')
+function AhpMatrix({ ahp, scope = 'global' }: { ahp: Json; scope?: 'global' | 'tamil_nadu' }) {
   const r = ahp[scope]
   const frac = (v: number) => (v >= 1 ? (Math.abs(v - Math.round(v)) < 1e-6 ? String(Math.round(v)) : v.toFixed(2)) : `1/${Math.round(1 / v)}`)
   return (
     <div className="mt-6">
-      <div className="w-max"><Segmented label="AHP scope" size="sm" value={scope} onChange={setScope} options={[{ value: 'global', label: 'Global' }, { value: 'tamil_nadu', label: 'Tamil Nadu' }]} /></div>
-      <Bezel radius="1.5rem" className="mt-4" inner="overflow-x-auto p-2">
+      <Bezel radius="1.5rem" inner="overflow-x-auto p-2">
         <table className="w-full min-w-[640px] text-sm">
           <thead>
             <tr className="text-xs text-muted">
@@ -182,6 +180,13 @@ export default function Methodology() {
   const [ahp, setAhp] = useState<Json | null>(null)
   const [phys, setPhys] = useState<Json | null>(null)
   const [active, setActive] = useState('overview')
+  const { hash } = useLocation()
+
+  useEffect(() => {
+    if (!hash) return
+    const t = window.setTimeout(() => document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 600)
+    return () => window.clearTimeout(t)
+  }, [hash, m])
 
   useEffect(() => {
     staticJson<Json>('metrics.json').then(setM).catch(() => setM(null))
@@ -224,7 +229,8 @@ export default function Methodology() {
             <P>
               Every location is described by satellite-derived predictors, then scored three ways: an expert-weighted AHP overlay, a supervised
               model of where solar plants have been built (development likelihood), and a physically constrained model of suitability. A
-              global model covers all land between 56° S and 72° N; a Tamil Nadu model runs at higher resolution with local grid data.
+              global model covers all land between 56° S and 72° N. Where 10 m data and local grid maps exist, a high-resolution regional
+              model runs as well (see the case study below).
             </P>
             <Figure src="/figures/suitability_map_global.webp" alt="Global physical suitability map" caption="Physical suitability on the 0.5° grid (55,000 land cells), exclusions applied." />
           </section>
@@ -277,7 +283,7 @@ export default function Methodology() {
             <P>
               A satellite looking at an existing plant sees panels, gravel and access roads. ESA WorldCover labels 41% of plant locations as built-up,
               and GHSL even reports people living on some panel fields. Time-varying predictors are therefore taken from before construction
-              (2008-10 MODIS globally, 2013-15 Landsat for Tamil Nadu) and measured now only at prediction time.
+              (2008-10 MODIS globally, 2013-15 Landsat in the high-res case study) and measured now only at prediction time.
             </P>
             <Figure src="/figures/leakage_landcover_then_vs_now.webp" alt="Land cover at plant locations before and after construction" caption="Land cover at plant locations: MODIS 2008 before construction vs ESA WorldCover 2021 after." />
             <Figure src="/figures/leakage_experiment.webp" alt="Leakage experiment" caption="Leaky models win on their own test set but lose on pre-construction land, which is what a new site looks like." />
@@ -299,13 +305,12 @@ export default function Methodology() {
             <H2 id="ml">Machine learning</H2>
             <P>
               Random Forest and XGBoost are trained on a stratified 80/20 split, with stratified 5-fold cross-validation on the training data and spatially
-              blocked 5-fold cross-validation (2° blocks, or solar sites for Tamil Nadu) on all data. The spatial score is the honest one: nearby points
+              blocked 5-fold cross-validation (2° blocks, or solar sites in the case study) on all data. The spatial score is the honest one: nearby points
               are never split between training and testing.
             </P>
             {m ? (
               <>
                 <MetricsTable res={m.global} title="Global model" />
-                <MetricsTable res={m.tamil_nadu} title="Tamil Nadu model (split by solar site)" />
               </>
             ) : <div className="skeleton mt-6 h-96" />}
             <div className="grid gap-5 md:grid-cols-2">
@@ -397,10 +402,20 @@ export default function Methodology() {
           </section>
 
           <section>
+            <H2 id="case-study">High-resolution case study (10 m)</H2>
+            <div className="mt-6">
+              <CaseStudy
+                ahpTable={ahp ? <AhpMatrix ahp={ahp} scope="tamil_nadu" /> : undefined}
+              />
+            </div>
+            {m && <MetricsTable res={m.tamil_nadu} title="Regional model (test split by solar site)" />}
+          </section>
+
+          <section>
             <H2 id="limits">Limitations</H2>
             <ul className="mt-4 max-w-[68ch] list-disc space-y-2 pl-5 leading-relaxed text-ink-2">
               <li>Grid estimates use the nearest 0.5° cell (up to about 40 km away) when live Earth Engine extraction is unavailable.</li>
-              <li>The Tamil Nadu rasters are decoded from 8-bit renders, so values are quantised to about 1/255 of their display range.</li>
+              <li>The high-res case-study rasters are decoded from 8-bit renders, so values are quantised to about 1/255 of their display range.</li>
               <li>The inventory ends in 2018 and under-represents Central Asia and Oceania.</li>
               <li>Land ownership, grid capacity, flood risk and protected areas are not modelled.</li>
               <li>The far north-east of Siberia is missing from the global grid because boundary polygons split at the antimeridian.</li>

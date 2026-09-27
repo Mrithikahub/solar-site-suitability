@@ -29,7 +29,7 @@ export function FamousParks({ onPick }: { onPick: (r: GeocodeResult) => void }) 
             title={`${p.name}: ${p.display_name}`}
             className="shrink-0 rounded-full bg-ink/[0.05] px-3 py-1.5 text-xs text-ink ring-1 ring-line transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-accent-soft hover:text-accent-ink active:scale-95 dark:bg-white/[0.05]"
           >
-            {p.name.replace(/ (Solar Power Project|Solar Park|Ultra Mega Solar Park|Ultra Mega Solar|Solar Complex|Desert Solar Park)$/, '')}
+            {p.name.replace(/( Al Maktoum)? (Solar Power Project|Solar Park|Solar Farm|Ultra Mega Solar Park|Ultra Mega Solar|Solar Complex|Desert Solar Park)$/, '')}
           </button>
         ))}
       </div>

@@ -93,7 +93,7 @@ OVERPASS_URLS = [
     "https://overpass-api.de/api/interpreter",
     "https://overpass.private.coffee/api/interpreter",
 ]
-HTTP_USER_AGENT = "solar-site-suitability/1.0 (student remote-sensing project)"
+HTTP_USER_AGENT = "solarsite/1.0 (+https://github.com/Mrithikahub/solar-site-suitability)"
 
 # --------------------------------------------------------------------------- #
 # GLOBAL model

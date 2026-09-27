@@ -8,7 +8,7 @@ export function Footer() {
         <div className="space-y-4">
           <Logo />
           <p className="max-w-sm text-sm leading-relaxed text-ink-2">
-            Solar PV site suitability from satellite remote sensing and machine learning. A Remote Sensing open-elective project.
+            Solar PV site suitability for any place on Earth, from satellite remote sensing and machine learning.
           </p>
         </div>
         <div className="space-y-3 text-sm">
@@ -16,7 +16,7 @@ export function Footer() {
           <ul className="space-y-2 text-ink-2">
             <li><Link className="hover:text-ink" to="/map">Map</Link></li>
             <li><Link className="hover:text-ink" to="/compare">Compare sites</Link></li>
-            <li><Link className="hover:text-ink" to="/tamil-nadu">Tamil Nadu case study</Link></li>
+            <li><Link className="hover:text-ink" to="/methodology#case-study">High-res case study</Link></li>
             <li><Link className="hover:text-ink" to="/methodology">Methodology</Link></li>
           </ul>
         </div>

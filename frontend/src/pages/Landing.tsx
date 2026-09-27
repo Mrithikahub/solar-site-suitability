@@ -1,10 +1,12 @@
 import { ArrowDown, Compass, Database, Plant, Stack, Sun, ThermometerHot, Mountains } from '@phosphor-icons/react'
 import { motion, useReducedMotion } from 'motion/react'
 import { useEffect, useState } from 'react'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import { Bar, BarChart, CartesianGrid, LabelList, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { SUIT_STEPS } from '../components/charts'
 import { Bezel, EASE, PillButton, Reveal } from '../components/ui'
 import { staticJson } from '../lib/api'
+import { basemap, ESRI_ATTRIBUTION } from '../lib/basemaps'
 import { useTheme } from '../lib/theme'
 
 /* ------------------------------------------------------------------ Hero */
@@ -87,6 +89,37 @@ function Stats() {
 }
 
 /* ------------------------------------------------------------------ Problem (editorial split) */
+const SHOWCASE = {
+  lat: 34.8276,
+  lon: -118.4408,
+  zoom: 14,
+  caption: 'Solar Star, California: 579 MW of panels on open desert, seen in satellite imagery.',
+}
+
+/** Non-interactive satellite view of a real utility-scale plant (keyless Esri World Imagery tiles). */
+function SatelliteView() {
+  const t = basemap('satellite', 'dark')
+  return (
+    <Bezel radius="2rem" inner="relative aspect-[4/3] bg-surface-2">
+      <MapContainer
+        center={[SHOWCASE.lat, SHOWCASE.lon]}
+        zoom={SHOWCASE.zoom}
+        className="h-full w-full"
+        zoomControl={false}
+        dragging={false}
+        scrollWheelZoom={false}
+        doubleClickZoom={false}
+        touchZoom={false}
+        boxZoom={false}
+        keyboard={false}
+        attributionControl
+      >
+        <TileLayer url={t.base} attribution={ESRI_ATTRIBUTION} maxNativeZoom={t.maxNative} />
+      </MapContainer>
+    </Bezel>
+  )
+}
+
 function Problem() {
   return (
     <section className="mx-auto grid max-w-[1400px] items-center gap-12 px-4 py-28 md:grid-cols-12 md:px-8 md:py-36">
@@ -97,19 +130,12 @@ function Problem() {
           Satellites already measure all of it, everywhere, every few days.
         </p>
         <p className="mt-4 max-w-[52ch] leading-relaxed text-ink-2">
-          This project turns those measurements into one score per location and learns the weights from thousands of real solar plants.
+          Solarsite turns those measurements into one score per location and learns the weights from thousands of real solar plants.
         </p>
       </Reveal>
       <Reveal delay={0.1} className="md:col-span-6 md:col-start-7">
-        <Bezel radius="2rem" inner="relative aspect-[4/3]">
-          <img
-            src="/img/layers/truecolor.webp"
-            alt="Sentinel-2 true-colour composite of Tamil Nadu, September 2025 to September 2026."
-            loading="lazy"
-            className="h-full w-full scale-[2.1] object-cover object-[42%_58%]"
-          />
-        </Bezel>
-        <p className="mt-3 text-sm text-muted">Tamil Nadu from Sentinel-2, a cloud-masked median of 2,086 scenes.</p>
+        <SatelliteView />
+        <p className="mt-3 text-sm text-muted">{SHOWCASE.caption}</p>
       </Reveal>
     </section>
   )
@@ -151,44 +177,48 @@ function HowItWorks() {
       <div className="mt-14 grid auto-rows-[minmax(300px,auto)] grid-cols-1 gap-5 md:grid-cols-6">
         <Tile
           className="md:col-span-4 md:row-span-2"
-          img="/img/layers/ndvi.webp"
-          imgClass="object-[50%_40%]"
-          alt="Sentinel-2 NDVI of Tamil Nadu: forested Western Ghats in dark green, dry plains in tan."
+          img="/img/layers/global_ndvi.webp"
+          imgClass="object-[52%_40%]"
+          alt="Global NDVI: tropical and boreal forest in dark green, deserts in tan."
           Icon={Plant}
           title="Observe the surface"
           body="Sentinel-2, Landsat 8/9 and MODIS are cloud-masked and composited into vegetation (NDVI) and built-up (NDBI) indices."
         />
         <Tile
           className="md:col-span-2"
-          img="/img/layers/lst.webp"
-          alt="Landsat land surface temperature of Tamil Nadu."
+          img="/img/layers/global_ghi.webp"
+          imgClass="object-[55%_50%]"
+          alt="Global horizontal irradiance from ERA5-Land, highest over the subtropical deserts."
           Icon={ThermometerHot}
           title="Measure heat and light"
-          body="Thermal bands give land surface temperature. ERA5-Land adds long-term irradiance."
+          body="ERA5-Land gives 20 years of irradiance; MODIS thermal bands add land surface temperature."
         />
         <Tile
           className="md:col-span-2"
-          img="/img/layers/slope.webp"
-          alt="Terrain slope of Tamil Nadu from SRTM."
+          img="/img/layers/global_slope.webp"
+          imgClass="object-[70%_40%]"
+          alt="Global terrain slope from the Copernicus 30 m DEM, highest in the Himalaya, Andes and Rockies."
           Icon={Mountains}
           title="Read the terrain"
-          body="Slope and aspect from 30 m elevation models decide where panels can sit."
+          body="Slope and aspect from the 30 m Copernicus DEM decide where panels can sit."
         />
         <Tile
           className="md:col-span-3"
-          img="/img/layers/landcover.webp"
-          alt="ESA WorldCover land cover of Tamil Nadu."
+          img="/img/layers/global_landcover.webp"
+          imgClass="object-[50%_45%]"
+          alt="Global land cover from ESA WorldCover."
           Icon={Stack}
           title="Learn from real plants"
           body="XGBoost and Random Forest learn what the land looked like before 8,213 real plants were built."
         />
         <Tile
           className="md:col-span-3"
-          img="/img/layers/ml_tn.webp"
-          alt="Machine-learning suitability map of Tamil Nadu at 285 m."
+          img="/img/layers/ml_global.webp"
+          imgClass="object-[50%_40%]"
+          alt="Global development-likelihood map on the 0.5 degree grid."
           Icon={Compass}
           title="Map every location"
-          body="The model scores a 0.5° world grid, and any clicked point live from Earth Engine."
+          body="Three scores for every 0.5° cell on land, and for any clicked point live from Earth Engine."
         />
       </div>
     </section>
@@ -248,25 +278,23 @@ function Scores() {
 interface LeakRow { name: string; own: number; pre: number }
 
 function Leakage() {
-  const [rows, setRows] = useState<{ clean: LeakRow[]; leaky: LeakRow[] } | null>(null)
+  const [rows, setRows] = useState<{ clean: LeakRow; leaky: LeakRow } | null>(null)
   useEffect(() => {
     staticJson<Record<string, any>>('metrics.json')
       .then((m) => {
-        const get = (scope: 'global' | 'tamil_nadu', v: string) => {
-          const r = m[scope].variants[v].models[m[scope].deployed_model]
-          return { own: r.test.roc_auc, pre: r.test_on_preconstruction_land.roc_auc }
+        const get = (v: string): LeakRow => {
+          const r = m.global.variants[v].models[m.global.deployed_model]
+          return { name: v, own: r.test.roc_auc, pre: r.test_on_preconstruction_land.roc_auc }
         }
-        const g = { c: get('global', 'clean'), l: get('global', 'leaky') }
-        const t = { c: get('tamil_nadu', 'clean'), l: get('tamil_nadu', 'leaky') }
-        setRows({
-          clean: [{ name: 'Global', ...g.c }, { name: 'Tamil Nadu', ...t.c }],
-          leaky: [{ name: 'Global', ...g.l }, { name: 'Tamil Nadu', ...t.l }],
-        })
+        setRows({ clean: get('clean'), leaky: get('leaky') })
       })
       .catch(() => setRows(null))
   }, [])
   const data = rows
-    ? rows.clean.map((c, i) => ({ name: c.name, 'Clean model': +c.pre.toFixed(3), 'Leaky model': +rows.leaky[i].pre.toFixed(3) }))
+    ? [
+        { name: 'Own test set', 'Clean model': +rows.clean.own.toFixed(3), 'Leaky model': +rows.leaky.own.toFixed(3) },
+        { name: 'Pre-construction land', 'Clean model': +rows.clean.pre.toFixed(3), 'Leaky model': +rows.leaky.pre.toFixed(3) },
+      ]
     : []
 
   return (
@@ -285,15 +313,15 @@ function Leakage() {
         </Reveal>
         <Reveal delay={0.1}>
           <Bezel radius="2rem" inner="p-6">
-            <p className="text-sm font-medium">ROC-AUC on pre-construction land</p>
-            <p className="text-xs text-muted">Higher is better. Held-out test sites.</p>
+            <p className="text-sm font-medium">Global model, ROC-AUC on held-out sites</p>
+            <p className="text-xs text-muted">The leaky model wins on its own test set and loses on land that has not been built on yet.</p>
             <div className="mt-4 h-72">
               {rows ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={data} margin={{ top: 22, right: 8, left: -12, bottom: 0 }} barGap={4}>
                     <CartesianGrid vertical={false} stroke="var(--line)" />
                     <XAxis dataKey="name" tickLine={false} axisLine={{ stroke: 'var(--line-strong)' }} tick={{ fill: 'var(--ink-2)', fontSize: 12 }} />
-                    <YAxis domain={[0.7, 1]} tickLine={false} axisLine={false} tick={{ fill: 'var(--muted)', fontSize: 11 }} />
+                    <YAxis domain={[0.75, 0.95]} tickLine={false} axisLine={false} tick={{ fill: 'var(--muted)', fontSize: 11 }} />
                     <Tooltip cursor={{ fill: 'var(--surface-2)' }} contentStyle={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12, fontSize: 12 }} />
                     <Legend iconType="circle" wrapperStyle={{ fontSize: 12, color: 'var(--ink-2)' }} />
                     <Bar dataKey="Clean model" fill="#2a78d6" radius={[4, 4, 0, 0]}>

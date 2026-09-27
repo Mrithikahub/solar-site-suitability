@@ -61,7 +61,9 @@ def main():
 
         # 2) area search restores the previous basemap
         page.keyboard.press("Escape")
+        before = page.evaluate("window.__solarMap.getZoom()")
         search(page, "Nevada")
+        page.wait_for_function(f"window.__solarMap.getZoom() !== {before}", timeout=20000)
         v = settle(page)
         page.wait_for_timeout(1200)
         print(f"Nevada         -> view={v} basemap={basemap(page)}")

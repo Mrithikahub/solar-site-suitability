@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Footer } from './components/Footer'
 import { Nav } from './components/Nav'
 import { Skeleton } from './components/ui'
@@ -7,7 +7,6 @@ import { Skeleton } from './components/ui'
 const Landing = lazy(() => import('./pages/Landing'))
 const MapPage = lazy(() => import('./pages/MapPage'))
 const Compare = lazy(() => import('./pages/Compare'))
-const TamilNadu = lazy(() => import('./pages/TamilNadu'))
 const Methodology = lazy(() => import('./pages/Methodology'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
@@ -15,7 +14,6 @@ const TITLES: Record<string, string> = {
   '/': 'Solarsite - Satellite solar site suitability',
   '/map': 'Map - Solarsite',
   '/compare': 'Compare sites - Solarsite',
-  '/tamil-nadu': 'Tamil Nadu case study - Solarsite',
   '/methodology': 'Methodology - Solarsite',
 }
 
@@ -47,7 +45,8 @@ export default function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/map" element={<MapPage />} />
             <Route path="/compare" element={<Compare />} />
-            <Route path="/tamil-nadu" element={<TamilNadu />} />
+            {/* the regional case study now lives inside the methodology page */}
+            <Route path="/tamil-nadu" element={<Navigate to="/methodology#case-study" replace />} />
             <Route path="/methodology" element={<Methodology />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

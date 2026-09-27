@@ -31,4 +31,4 @@ services:
       - key: ALLOWED_ORIGIN_REGEX
         value: https://.*\.vercel\.app
       - key: GEOCODER_USER_AGENT
-        value: solarsite/1.0 (student remote-sensing project; https://github.com/Mrithikahub)
+        value: solarsite/1.0 (+https://github.com/Mrithikahub/solar-site-suitability)

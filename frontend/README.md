@@ -9,6 +9,6 @@ npm run dev                         # http://localhost:5173
 npm run build                       # production build in dist/
 ```
 
-Pages: `/` landing, `/map` map dashboard, `/compare`, `/tamil-nadu` case study, `/methodology`.
+Pages: `/` landing, `/map` map dashboard, `/compare`, `/methodology` (includes the high-resolution case study; `/tamil-nadu` redirects there).
 Static figures, imagery and metrics in `public/` are refreshed with `python scripts/sync_frontend_assets.py`
 from the repository root. Deployment: see `../docs/DEPLOYMENT.md` (Vercel, root directory `frontend`).

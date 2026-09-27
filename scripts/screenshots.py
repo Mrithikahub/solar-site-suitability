@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "report" / "screenshots"
 OUT.mkdir(parents=True, exist_ok=True)
 BASE = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:5173"
-PAGES = [("landing", "/"), ("compare", "/compare"), ("tamil_nadu", "/tamil-nadu"), ("methodology", "/methodology")]
+PAGES = [("landing", "/"), ("compare", "/compare"), ("methodology", "/methodology")]
 
 
 def settle(page, full: bool = True):
@@ -62,7 +62,11 @@ def main():
                 settle(page)
                 page.screenshot(path=OUT / f"{name}_{theme}_hero.png")
                 page.screenshot(path=OUT / f"{name}_{theme}_full.png", full_page=True)
-            # map: overview, then a click-to-analyse on Kamuthi (Tamil Nadu)
+            # high-res case study section inside the methodology page
+            page.goto(BASE + "/methodology#case-study")
+            page.wait_for_timeout(3500)
+            page.screenshot(path=OUT / f"case_study_{theme}.png")
+            # map: overview, then a click-to-analyse on Kamuthi
             page.goto(BASE + "/map")
             page.wait_for_timeout(3500)
             page.screenshot(path=OUT / f"map_{theme}_overview.png")

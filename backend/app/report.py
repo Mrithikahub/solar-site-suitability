@@ -107,8 +107,8 @@ def _table(rows, widths, header=True, zebra=True):
 def build_pdf(pred: dict, name: str | None = None) -> bytes:
     buf = io.BytesIO()
     doc = SimpleDocTemplate(buf, pagesize=A4, leftMargin=16 * mm, rightMargin=16 * mm, topMargin=14 * mm,
-                            bottomMargin=14 * mm, title="Solar Site Suitability Report",
-                            author="Solar Site Suitability (RS + ML)")
+                            bottomMargin=14 * mm, title="Solarsite site report",
+                            author="Solarsite")
     W = A4[0] - 32 * mm
     lat, lon = pred["lat"], pred["lon"]
     prov = pred["provenance"]
@@ -150,7 +150,7 @@ def build_pdf(pred: dict, name: str | None = None) -> bytes:
                      Paragraph(s["description"], S["cellm"])])
     if "tamil_nadu_local" in pred:
         t = pred["tamil_nadu_local"]
-        rows.append([Paragraph("Tamil Nadu local model", S["cell"]), f"{t['score']:.1f}", t["class"],
+        rows.append([Paragraph(t.get("label", "High-res regional model"), S["cell"]), f"{t['score']:.1f}", t["class"],
                      Paragraph(t["note"], S["cellm"])])
     story += [Spacer(1, 6), _table(rows, [42 * mm, 16 * mm, 16 * mm, W - 74 * mm])]
 
@@ -212,6 +212,6 @@ def _footer(canvas, doc):
     canvas.saveState()
     canvas.setFont("DejaVu", 7)
     canvas.setFillColor(MUTED)
-    canvas.drawString(16 * mm, 9 * mm, "Solar Site Suitability · Remote Sensing + Machine Learning")
+    canvas.drawString(16 * mm, 9 * mm, "Solarsite · solar site suitability from remote sensing and machine learning")
     canvas.drawRightString(A4[0] - 16 * mm, 9 * mm, f"Page {doc.page}")
     canvas.restoreState()

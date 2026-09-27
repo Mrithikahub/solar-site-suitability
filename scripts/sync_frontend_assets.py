@@ -33,7 +33,8 @@ for png in sorted((ROOT / "report" / "figures").glob("*.png")):
 
 # layer imagery used on static pages
 LAYERS = ["truecolor", "ndvi", "ndbi", "lst", "slope", "elevation", "landcover", "tn_ghi", "ml_tn", "ahp_tn",
-          "physical_global", "ml_global", "ahp_global", "global_ghi", "global_ndvi", "global_landcover"]
+          "physical_global", "ml_global", "ahp_global", "global_ghi", "global_ndvi", "global_landcover",
+          "global_slope", "global_lst", "global_nightlights", "global_population"]
 for name in LAYERS:
     src = ROOT / "data" / "processed" / "layers" / f"{name}.webp"
     shutil.copy2(src, IMG_OUT / src.name)

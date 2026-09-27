@@ -17,9 +17,9 @@ case study (10 m Sentinel-2, Landsat thermal, SRTM and OpenStreetMap grid data).
 |---|---|
 | ![Kamuthi on satellite](docs/screenshots/map-satellite-kamuthi.webp) | ![Excluded urban site](docs/screenshots/map-excluded.webp) |
 
-| Compare sites | Tamil Nadu case study | Mobile |
+| Compare sites | High-resolution case study (10 m) | Mobile |
 |---|---|---|
-| ![Compare](docs/screenshots/compare.webp) | ![Tamil Nadu](docs/screenshots/tamil-nadu.webp) | ![Mobile](docs/screenshots/mobile.webp) |
+| ![Compare](docs/screenshots/compare.webp) | ![High-res case study](docs/screenshots/case-study.webp) | ![Mobile](docs/screenshots/mobile.webp) |
 
 More: [search autocomplete](docs/screenshots/search-autocomplete.webp), [famous-park quick picks](docs/screenshots/map-famous-parks.webp),
 [methodology page](docs/screenshots/methodology.webp), [light mode](docs/screenshots/landing-light.webp).

@@ -203,8 +203,8 @@ export function ResultPanel({ pred, loading, error, point, inputs, setInputs, on
               {pred.tamil_nadu_local && (
                 <div className="flex items-center justify-between rounded-2xl bg-surface-2 px-4 py-3 ring-1 ring-line">
                   <div>
-                    <p className="text-[12px] font-medium text-ink-2">Tamil Nadu local model</p>
-                    <p className="text-[11.5px] text-muted">285 m raster with OSM grid distances</p>
+                    <p className="text-[12px] font-medium text-ink-2">{pred.tamil_nadu_local.label ?? 'High-res regional model'}</p>
+                    <p className="text-[11.5px] text-muted">10-30 m imagery with local grid distances</p>
                   </div>
                   <div className="text-right">
                     <p className="font-mono text-xl tabular">{Math.round(pred.tamil_nadu_local.score)}</p>
