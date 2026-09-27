@@ -204,3 +204,5 @@ Data: Google Earth Engine catalog (ESA/Copernicus, NASA/USGS, ECMWF, JRC, NOAA, 
 Kruitwagen et al. (2021) via the awesome-gee-community-catalog, NASA POWER, © OpenStreetMap contributors
 (ODbL), Photon by Komoot, Nominatim, Esri basemaps. Built with scikit-learn, XGBoost, SHAP, FastAPI,
 ReportLab, React, Vite, Tailwind CSS, Leaflet, Recharts and Motion.
+
+Live site: https://solar-site-suitability.vercel.app
