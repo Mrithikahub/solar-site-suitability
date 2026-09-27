@@ -182,10 +182,30 @@ export default function Methodology() {
   const [active, setActive] = useState('overview')
   const { hash } = useLocation()
 
+  // deep link to a section: figures above it load lazily and grow the page, so keep
+  // the target aligned while the layout settles (max 4 s, or until the reader scrolls)
   useEffect(() => {
     if (!hash) return
-    const t = window.setTimeout(() => document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 600)
-    return () => window.clearTimeout(t)
+    const id = hash.slice(1)
+    let done = false
+    const align = () => !done && document.getElementById(id)?.scrollIntoView({ block: 'start' })
+    const stop = () => { done = true }
+    const ro = new ResizeObserver(align)
+    ro.observe(document.body)
+    const t0 = window.setTimeout(align, 300)
+    const t1 = window.setTimeout(stop, 4000)
+    window.addEventListener('wheel', stop, { passive: true })
+    window.addEventListener('touchmove', stop, { passive: true })
+    window.addEventListener('keydown', stop)
+    return () => {
+      done = true
+      ro.disconnect()
+      window.clearTimeout(t0)
+      window.clearTimeout(t1)
+      window.removeEventListener('wheel', stop)
+      window.removeEventListener('touchmove', stop)
+      window.removeEventListener('keydown', stop)
+    }
   }, [hash, m])
 
   useEffect(() => {
